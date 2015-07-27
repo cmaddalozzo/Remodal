@@ -1,6 +1,6 @@
 {
   "name": "remodal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.",
   "keywords": [
     "jquery-plugin",
@@ -51,7 +51,9 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-csscomb": "3.0.0",
     "grunt-githooks": "^0.3.1",
-    "grunt-jscs": "^1.8.0"
+    "grunt-jscs": "^1.8.0",
+    "grunt-exec": "^0.4.6",
+    "spacejam": "^1.1.1"
   },
   "scripts": {
     "start": "npm install && ./node_modules/.bin/bower install && ./node_modules/.bin/grunt githooks",

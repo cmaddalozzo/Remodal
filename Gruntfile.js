@@ -142,6 +142,20 @@ module.exports = function(grunt) {
       options: {
         spawn: false
       }
+    },
+    exec: {
+      'meteor-init': {
+        command: ['type meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }', 'cp meteor/package.js .'].join(';')
+      },
+      'meteor-cleanup': {
+        command: 'rm -rf .build.* versions.json package.js'
+      },
+      'meteor-test': {
+        command: 'node_modules/.bin/spacejam --mongo-url mongodb:// test-packages ./'
+      },
+      'meteor-publish': {
+        command: 'meteor publish'
+      }
     }
   });
 
@@ -156,6 +170,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-csscomb');
   grunt.loadNpmTasks('grunt-githooks');
   grunt.loadNpmTasks('grunt-jscs');
+  grunt.loadNpmTasks('grunt-exec');
 
   // Tasks
   grunt.registerTask('lint', ['jshint', 'jscs']);
@@ -163,4 +178,9 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['concat', 'autoprefixer', 'csscomb', 'uglify', 'githooks']);
   grunt.registerTask('bsync', ['browserSync', 'watch']);
   grunt.registerTask('default', ['test', 'build']);
+
+  // Meteor tasks
+  grunt.registerTask('meteor-test', ['exec:meteor-init', 'exec:meteor-test', 'exec:meteor-cleanup']);
+  grunt.registerTask('meteor-publish', ['exec:meteor-init', 'exec:meteor-publish', 'exec:meteor-cleanup']);
+  grunt.registerTask('meteor', ['exec:meteor-init', 'exec:meteor-test', 'exec:meteor-publish', 'exec:meteor-cleanup']);
 };
